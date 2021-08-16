@@ -59,50 +59,45 @@ A multi-sensor fusion odometry, LVIO-SAM, which fuses LiDAR, stereo camera and i
 
 <!-- ABOUT THE PROJECT -->
 ### About The Project
-<p align="center">
-  <a href="">
-    <img src="images/model_to_gazebo.gif" alt="[Logo]" width="90%">
-  </a>
-</p>
+&emsp;&emsp; This project is provide a a multi-sensor fusion odometry, LVIO-SAM, which fuses LiDAR,stereo camera and inertial measurement unit (IMU) via smoothing and mapping.
 
+`!!!Important Notes!!!`
 
-
-&emsp;&emsp; This project is provide a scrip to convert 3D models from sketchup and convert it to gazebo models.
 
 
 ### Simulations environment
-&emsp;&emsp;
+&emsp;&emsp; We modify the Gazebo world proposed in [here](https://github.com/jizhang-cmu/ground_based_autonomy_basic) and adding our own sensors to test our proposed method. We use [Husky](https://github.com/husky/husky) as the base robot and we modify the urdf. The robot is equiped with A velodyne VLP 16 lidar, stereo camera(640x480) and an IMU (50Hz).
 
-### How to run
+Download the [CMU campus model](https://drive.google.com/file/d/1GGZsf5QYhy6wGUXvzUn1D8RzcYzM_O4f/view?usp=sharing) to `sim_env/husky_gazebo/mesh/`
+```bash
+cd YOUR_WORD_PATH/LVIO_SAM/sim_env/husky_gazebo/mesh/
+unzip autonomus_exploration_environments.zip
+```
 
-&emsp;&emsp; This project provide a gazebo world. so if you wanna test the code, you need prepare the simulation world.
+I guess c `campus` model it to `~/.gazebo/models/`.
+```bash
+cd autonomus_exploration_environments/
+cp -r campus ~/.gazebo/models/
+```
 
-&emsp;&emsp; 
+you can launch gazebo and find campu model just like this.
 
 <p align="center">
   <a href="">
-    <img src="images/3dwarehouse.png" alt="[Logo]" width="90%">
+    <img src="images/.png" alt="[Logo]" width="90%">
   </a>
 </p>
 
 
+### How to run
 
-&emsp;&emsp; Step 3:
-```bash
-
-```
-
-```
-
-```
-
-&emsp;&emsp;
+&emsp;&emsp; Since our code is still being integrated. we will release it in the feature. But we provide a docker environment for users.  So [Docker]() should be correctly installed.
 
 ```bash
+docker pull ***
 
 ```
 
-&emsp;&emsp;We only support *.obj format.
 ```bash
 cd LVIO-SAM/
 
@@ -112,7 +107,6 @@ cd LVIO-SAM/
 
 ```
 
-`YOUR_MODEL_NAME must be the same with your sketchup export name!!!`
 
 &emsp;&emsp; 
 ```bash

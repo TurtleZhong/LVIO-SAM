@@ -1,0 +1,8 @@
+# The empty Husky extras configuration has nothing in it and should not.
+# It is meant to override the default to add custom control parameters
+# file in your own Husky customization package and setting HUSKY_CONFIG_EXTRAS
+# to your customization file in the launch fil control.launch.
+# Each parameter will need to be loaded in the correct namespace to
+# be used. For example, for a Husky with a lower gear ratio.
+# This can be used to change husky_velocity_controller/wheel_radius_multiplier
+# to account for the change in the gearbox.

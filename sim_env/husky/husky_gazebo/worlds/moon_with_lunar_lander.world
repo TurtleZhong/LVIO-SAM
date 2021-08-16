@@ -1,0 +1,159 @@
+<sdf version='1.6'>
+  <world name='moon'>
+    <light name='sun' type='directional'>
+      <cast_shadows>1</cast_shadows>
+      <pose frame=''>0 0 10 0 -0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+    <model name='apollo15_landing_site_1000x1000'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.2</mu>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode>
+                <soft_cfm>1</soft_cfm>
+                <kp>100000</kp>
+                <kd>1</kd>
+                <max_vel>1e-06</max_vel>
+                <min_depth>0.02</min_depth>
+              </ode>
+            </contact>
+            <bounce/>
+          </surface>
+          <geometry>
+            <heightmap>
+              <uri>model://apollo15_landing_site_1000x1000/materials/textures/NAC_DTM_APOLLO15_E261N0036_257x257+7472+2152.png</uri>
+              <size>514 514 49</size>
+              <pos>0 0 -45</pos>
+              <texture>
+                <size>10</size>
+                <diffuse>__default__</diffuse>
+                <normal>__default__</normal>
+              </texture>
+              <blend>
+                <min_height>0</min_height>
+                <fade_dist>0</fade_dist>
+              </blend>
+            </heightmap>
+          </geometry>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <heightmap>
+              <texture>
+                <diffuse>model://apollo15_landing_site_1000x1000/materials/textures/AS16-110-18026HR-512x512.jpg</diffuse>
+                <normal>file://media/materials/textures/flat_normal.png</normal>
+                <size>2</size>
+              </texture>
+              <uri>model://apollo15_landing_site_1000x1000/materials/textures/NAC_DTM_APOLLO15_E261N0036_257x257+7472+2152.png</uri>
+              <size>514 514 49</size>
+              <pos>0 0 -45</pos>
+              <blend>
+                <min_height>0</min_height>
+                <fade_dist>0</fade_dist>
+              </blend>
+            </heightmap>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <physics name='default_physics' default='0' type='ode'>
+      <max_step_size>0.01</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>100</real_time_update_rate>
+    </physics>
+    <gravity>0 0 -1.622</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.0 0.0 0.0 1</background>
+      <shadows>1</shadows>
+    </scene>
+    <audio>
+      <device>default</device>
+    </audio>
+    <wind/>
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>0</latitude_deg>
+      <longitude_deg>0</longitude_deg>
+      <elevation>0</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+    <model name='ApolloLunarModul'>
+      <static>1</static>
+      <link name='link'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>model://ApolloLunarModul/meshes/ApolloLunarModul.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>2.36133 -10.2407 0 0 -0 0</pose>
+    </model>
+    <state world_name='moon'>
+      <sim_time>394 860000000</sim_time>
+      <real_time>395 88465019</real_time>
+      <wall_time>1626330023 967834220</wall_time>
+      <iterations>39486</iterations>
+      <model name='ApolloLunarModul'>
+        <pose frame=''>10.5353 4.60803 2.50849 0 0 -2.34415</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>10.5353 4.60803 2.50849 0 0 -2.34415</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='apollo15_landing_site_1000x1000'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <light name='sun'>
+        <pose frame=''>0 0 10 0 -0 0</pose>
+      </light>
+    </state>
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose frame=''>11.3166 -63.6559 20.164 0 0.267456 1.43222</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+  </world>
+</sdf>

@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<!--
+Software License Agreement (BSD)
+
+\file      gazebo_description.launch
+\authors   Paul Bovbel <pbovbel@clearpathrobotics.com
+\copyright Copyright (c) 2015, Clearpath Robotics, Inc., All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that
+the following conditions are met:
+ * Redistributions of source code must retain the above copyright notice, this list of conditions and the
+   following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the
+   following disclaimer in the documentation and/or other materials provided with the distribution.
+ * Neither the name of Clearpath Robotics nor the names of its contributors may be used to endorse or promote
+   products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WAR-
+RANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, IN-
+DIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
+OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<launch>
+
+  <arg name="multimaster" default="false"/>
+
+  <arg name="robot_namespace" default="/"/>
+
+  <arg name="x" default="0.0"/>
+  <arg name="y" default="0.0"/>
+  <arg name="z" default="0.0"/>
+  <arg name="yaw" default="0.0"/>
+
+  <!-- Optionally disable teleop control -->
+  <arg name="joystick" default="true" />
+
+  <group ns="$(arg robot_namespace)">
+
+    <group if="$(arg multimaster)">
+      <include file="$(find husky_description)/launch/description.launch" >
+        <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+      </include>
+
+      <include file="$(find multimaster_launch)/launch/multimaster_gazebo_robot.launch">
+        <arg name="gazebo_interface" value="$(find husky_control)/config/gazebo_interface.yaml" />
+        <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+      </include>
+
+      <!-- For multimaster bringup, need to load the controller config -->
+      <rosparam command="load" file="$(find husky_control)/config/control.yaml" />
+    </group>
+
+    <!-- For single master bringup, run robot control on the gazebo master -->
+    <!-- Note that husky_description/description.launch is already included in husky_control/control.launch. -->
+    <group unless="$(arg multimaster)">
+      <include file="$(find husky_control)/launch/control.launch">
+        <arg name="multimaster" value="$(arg multimaster)"/>
+      </include>
+      <include file="$(find husky_control)/launch/teleop.launch">
+        <arg name="joystick" value="$(arg joystick)" />
+      </include>
+    </group>
+
+    <!-- Additional nodes for specific accessories -->
+    <group if="$(optenv HUSKY_REALSENSE_ENABLED 0)">
+      <include file="$(find husky_gazebo)/launch/realsense.launch" />
+    </group>
+
+    <!-- Spawn robot in gazebo -->
+    <node name="spawn_husky_model" pkg="gazebo_ros" type="spawn_model"
+        args="-x $(arg x)
+              -y $(arg y)
+              -z $(arg z)
+              -Y $(arg yaw)
+              -unpause
+              -urdf
+              -param robot_description
+              -model $(arg robot_namespace)" />
+    
+
+  </group>
+
+</launch>
