@@ -80,19 +80,97 @@ cd autonomus_exploration_environments/
 cp -r campus ~/.gazebo/models/
 ```
 
-you can launch gazebo and find campu model just like this.
+you can launch gazebo and find campu model to check if it is OK.
+
+
+
+```bash
+git clone https://github.com/TurtleZhong/LVIO-SAM.git
+
+cd YOUR_PATH/LVIO-SAM
+catkin build -DCMAKE_BUILD_TYPE=Release
+source devel/setup.bash
+
+roslaunch husky_gazebo husky_campus.launch
+```
+
+It will take a few minutes to load the world. please start a new terminal and launch the husky and sensor model.
+
+```bash
+roslaunch husky_gazebo spawn_husky.launch
+```
+
+If everything is OK, you will get this:
+
 
 <p align="center">
   <a href="">
-    <img src="images/.png" alt="[Logo]" width="90%">
+    <img src="images/cmu_campus_gazebo_ros.png" alt="[Logo]" width="100%">
   </a>
 </p>
 
+if you want control the robot, you can use the keyboard i,j,k,l etc.
 
-### How to run
+```bash
+rosrun teleop_twist_keyboard teleop_twist_keyboard.py
+```
+
+### How to run in Docker
 
 &emsp;&emsp; Since our code is still being integrated. we will release it in the feature. But we provide a docker environment for users.  So [Docker]() should be correctly installed.
 
+
+&emsp;&emsp;Step1. Prepare Datasets
+```bash
+wget https://s3.eu-central-1.amazonaws.com/avg-kitti/raw_data/2011_09_30_drive_0027/2011_09_30_drive_0027_sync.zip
+wget https://s3.eu-central-1.amazonaws.com/avg-kitti/raw_data/2011_09_30_drive_0027/2011_09_30_drive_0027_extract.zip
+wget https://s3.eu-central-1.amazonaws.com/avg-kitti/raw_data/2011_09_30_calib.zip
+unzip 2011_09_30_drive_0084_sync.zip
+unzip 2011_09_30_drive_0084_extract.zip
+unzip 2011_09_30_calib.zip
+python kitti2bag.py -t 2011_09_30 -r 0027 raw_synced .
+```
+
+That's it. You have a bag that contains your data.
+```bash
+╰─$ rosbag info kitti_2011_09_30_drive_0027_synced.bag 
+path:        kitti_2011_09_30_drive_0027_synced.bag
+version:     2.0
+duration:    1:55s (115s)
+start:       Sep 30 2011 12:40:25.07 (1317357625.07)
+end:         Sep 30 2011 12:42:20.41 (1317357740.41)
+size:        6.0 GB
+messages:    35278
+compression: none [4435/4435 chunks]
+types:       geometry_msgs/TwistStamped [98d34b0043a2093cf9d9345ab6eef12e]
+             sensor_msgs/CameraInfo     [c9a58c1b0b154e0e6da7578cb991d214]
+             sensor_msgs/Image          [060021388200f6f0f447d0fcd9c64743]
+             sensor_msgs/Imu            [6a62c6daae103f4ff57a132d6f95cec2]
+             sensor_msgs/NavSatFix      [2d3a8cd499b9b4a0249fb98fd05cfa48]
+             sensor_msgs/PointCloud2    [1158d486dd51d683ce2f1be655c3c181]
+topics:      /gps/fix                                 1106 msgs    : sensor_msgs/NavSatFix     
+             /gps/vel                                 1106 msgs    : geometry_msgs/TwistStamped
+             /imu_correct                            11556 msgs    : sensor_msgs/Imu           
+             /imu_raw                                11556 msgs    : sensor_msgs/Imu           
+             /kitti/camera_color_left/camera_info     1106 msgs    : sensor_msgs/CameraInfo    
+             /kitti/camera_color_left/image_raw       1106 msgs    : sensor_msgs/Image         
+             /kitti/camera_color_right/camera_info    1106 msgs    : sensor_msgs/CameraInfo    
+             /kitti/camera_color_right/image_raw      1106 msgs    : sensor_msgs/Image         
+             /kitti/camera_gray_left/camera_info      1106 msgs    : sensor_msgs/CameraInfo    
+             /kitti/camera_gray_left/image_raw        1106 msgs    : sensor_msgs/Image         
+             /kitti/camera_gray_right/camera_info     1106 msgs    : sensor_msgs/CameraInfo    
+             /kitti/camera_gray_right/image_raw       1106 msgs    : sensor_msgs/Image         
+             /points_raw                              1106 msgs    : sensor_msgs/PointCloud2
+
+
+```
+
+
+Other source files can be found at [KITTI raw data](http://www.cvlibs.net/datasets/kitti/raw_data.php) page.
+
+
+
+&emsp;&emsp;Step2. Get docker images.
 ```bash
 docker pull ***
 
