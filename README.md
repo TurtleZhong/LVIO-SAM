@@ -121,6 +121,8 @@ rosrun teleop_twist_keyboard teleop_twist_keyboard.py
 
 
 &emsp;&emsp;Step1. Prepare Datasets
+
+1. KITTI datasets
 ```bash
 wget https://s3.eu-central-1.amazonaws.com/avg-kitti/raw_data/2011_09_30_drive_0027/2011_09_30_drive_0027_sync.zip
 wget https://s3.eu-central-1.amazonaws.com/avg-kitti/raw_data/2011_09_30_drive_0027/2011_09_30_drive_0027_extract.zip
@@ -161,43 +163,103 @@ topics:      /gps/fix                                 1106 msgs    : sensor_msgs
              /kitti/camera_gray_right/camera_info     1106 msgs    : sensor_msgs/CameraInfo    
              /kitti/camera_gray_right/image_raw       1106 msgs    : sensor_msgs/Image         
              /points_raw                              1106 msgs    : sensor_msgs/PointCloud2
-
-
 ```
 
 
 Other source files can be found at [KITTI raw data](http://www.cvlibs.net/datasets/kitti/raw_data.php) page.
 
 
+2. sim_env datasets
 
-&emsp;&emsp;Step2. Get docker images.
+You can record datasets from our simulation environments or download the sample dataset from [BaiduYun Link](https://pan.baidu.com/s/1zrDGtbviyQqyM9vwcQXAUQ), the extract code is `f8to`.
+
+
+&emsp;&emsp;Get docker images and create your own datasets..
 ```bash
-docker pull ***
+docker pull xinliangzhong/ubuntu-18.04-novnc-lvio-sam:v1
 
 ```
 
-```bash
-cd LVIO-SAM/
-
-```
+use `docker images` check the image is ok.
 
 ```bash
+docker run -it --rm -p 8080:80 xinliangzhong/ubuntu-18.04-novnc-lvio-sam:v1
 
 ```
+then open the Chrome browser and type `http://127.0.0.1:8080/`
 
+open 3 terminal and run
+
+```bash
+cd /root
+source .bashrc
+cd work/ws_lvio/
+source devel/setup.bash
+
+roslaunch husky_gazebo husky_campus.launch
+```
+
+
+```bash
+roslaunch husky_gazebo husky_campus.launch
+```
+
+It will take a few minutes to load the world. please start a new terminal and launch the husky and sensor model.
+
+```bash
+roslaunch husky_gazebo spawn_husky.launch
+```
 
 &emsp;&emsp; 
 ```bash
-
+roslaunch husky_viz view_robot.launch
 ```
 
 
-If everything is OK, you will get this:
+If everything is OK, you will get this in your chrome browser:
 <p align="center">
   <a href="">
-    <img src="images/model_to_gazebo.gif" alt="[Logo]" width="90%">
+    <img src="images/http_docker_view.png" alt="[Logo]" width="90%">
   </a>
 </p>
+
+
+### Run LVIO-SAM in docker
+
+Follow the above steps to get the docker image, and open it in  browser:
+
+<p align="center">
+  <a href="">
+    <img src="images/http_docker_lvio-sam.png" alt="[Logo]" width="90%">
+  </a>
+</p>
+
+```bash
+cd /root
+source .bashrc
+cd work/ws_lvio/
+source devel/setup.bash
+
+roslaunch lvio_sam run_kitti_debug_test_vo_between_factor.launch #for kitti dataset.
+roslaunch lvio_sam run_kitti_debug_test_vo_between_factor.launch #for sim dataset.
+```
+
+we prepare 2 sample bag in the docker, you can use it directly.
+
+```bash
+rosbag play kitti_2011_09_30_drive_0027_synced.bag --pause --clock #for kitti dataset.
+rosbag play 2021-08-04-09-49-56.bag --pause --clock #for sim dataset.
+```
+
+If everything is OK, you will get this in your chrome browser:
+<p align="center">
+  <a href="">
+    <img src="images/http_docker_lvio-sam-kitti.png" alt="[Logo]" width="90%">
+  </a>
+</p>
+
+
+
 
 
 
@@ -245,9 +307,9 @@ Project Link: [https://github.com/TurtleZhong/LVIO-SAM](https://github.com/Turtl
 * [ROS](http://wiki.ros.org/)
 * [Gazebo](http://gazebosim.org/)
 * [LOAM]()
-* [LIO-SAM]
-* [VINS-FUSION]
-* [LVI-SAM]
+* [LIO-SAM]()
+* [VINS-FUSION]()
+* [LVI-SAM]()
 
 
 
