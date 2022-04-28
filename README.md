@@ -300,7 +300,18 @@ Xinliang Zhong - [@zxl](null) - xinliangzhong@foxmail.com
 
 Project Link: [https://github.com/TurtleZhong/LVIO-SAM](https://github.com/TurtleZhong/LVIO-SAM)
 
+### Citation
 
+```bash
+@inproceedings{zhong2021lvio,
+  title={LVIO-SAM: A Multi-sensor Fusion Odometry via Smoothing and Mapping},
+  author={Zhong, Xinliang and Li, Yuehua and Zhu, Shiqiang and Chen, Wenxuan and Li, Xiaoqian and Gu, Jason},
+  booktitle={2021 IEEE International Conference on Robotics and Biomimetics (ROBIO)},
+  pages={440--445},
+  year={2021},
+  organization={IEEE}
+}
+```
 
 <!-- ACKNOWLEDGEMENTS -->
 ### Acknowledgements
